@@ -72,6 +72,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Db\Dish.cs" />
+    <Compile Include="Db\GoShoppingDbContext.cs" />
+    <Compile Include="Db\Ingredient.cs" />
+    <Compile Include="Db\Unit.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -81,6 +85,10 @@
     <Compile Include="Migrations\201911171646375_CreateDishAndIngredient.cs" />
     <Compile Include="Migrations\201911171646375_CreateDishAndIngredient.designer.cs">
       <DependentUpon>201911171646375_CreateDishAndIngredient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911171907107_CreateUnit.cs" />
+    <Compile Include="Migrations\201911171907107_CreateUnit.designer.cs">
+      <DependentUpon>201911171907107_CreateUnit.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -98,6 +106,9 @@
     </Compile>
     <EmbeddedResource Include="Migrations\201911171646375_CreateDishAndIngredient.resx">
       <DependentUpon>201911171646375_CreateDishAndIngredient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911171907107_CreateUnit.resx">
+      <DependentUpon>201911171907107_CreateUnit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
