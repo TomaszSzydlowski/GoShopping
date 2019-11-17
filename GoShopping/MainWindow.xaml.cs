@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GoShopping
 {
@@ -20,9 +8,49 @@ namespace GoShopping
     /// </summary>
     public partial class MainWindow : Window
     {
+        GoShoppingDbContext context = new GoShoppingDbContext();
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Create demo: Create a User instance and save it to the database
+            Dish newDish = new Dish { Name = "Spagetti" };
+            context.Dishes.Add(newDish);
+            context.SaveChanges();
+
+            // Create demo: Create a Task instance and save it to the database
+            Ingredient newIngredient = new Ingredient()
+            {
+                Name = "Makaron",
+                Quantity = 200,
+            };
+            context.Ingredients.Add(newIngredient);
+            context.SaveChanges();
+
+            Unit newUnit = new Unit
+            {
+                Name = "g"
+            };
+
+            context.Units.Add(newUnit);
+            context.SaveChanges();
+
+            // Association demo: Assign task to user
+            newIngredient.Dish = newDish;
+            newIngredient.Unit = newUnit;
+            context.SaveChanges();
+
+            // Read demo: find incomplete tasks assigned to user 'Anna'
+            var query = from d in context.Dishes
+                        where d.Name == "Spagetti"
+                        select d;
+
+
+            dataGrid1.ItemsSource = query.ToList();
         }
     }
 }
