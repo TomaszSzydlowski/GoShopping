@@ -1,17 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Entity;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GoShopping
 {
@@ -39,6 +29,12 @@ namespace GoShopping
         public String Name { get; set; }
         public bool IsSpice { get; set; }
         public int Quantity { get; set; }
-
     }
+
+    public class GoShoppingDbContext : DbContext
+    {
+        public DbSet<Dish> Dishes { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+    }
+
 }
