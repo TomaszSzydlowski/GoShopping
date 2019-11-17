@@ -94,6 +94,10 @@
     <Compile Include="Migrations\201911172014074_AddColumnDishToIngredient.designer.cs">
       <DependentUpon>201911172014074_AddColumnDishToIngredient.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911172039107_AddColumnPreparationTime.cs" />
+    <Compile Include="Migrations\201911172039107_AddColumnPreparationTime.designer.cs">
+      <DependentUpon>201911172039107_AddColumnPreparationTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -116,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911172014074_AddColumnDishToIngredient.resx">
       <DependentUpon>201911172014074_AddColumnDishToIngredient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911172039107_AddColumnPreparationTime.resx">
+      <DependentUpon>201911172039107_AddColumnPreparationTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
