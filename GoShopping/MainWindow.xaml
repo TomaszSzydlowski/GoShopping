@@ -7,8 +7,44 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         Loaded="Window_Loaded">
-    <Grid>
-        <StackPanel x:Name="st1"></StackPanel>
+    <Window.Resources>
+        <ControlTemplate x:Key="ItemTemplate" TargetType="ListViewItem">
+            <Border
+                BorderThickness="{TemplateBinding Border.BorderThickness}"
+                Padding="{TemplateBinding Control.Padding}"
+                BorderBrush="{TemplateBinding Border.BorderBrush}"
+                Background="{TemplateBinding Panel.Background}"
+                SnapsToDevicePixels="True">
+                <ContentPresenter
+                    Content="{TemplateBinding ContentControl.Content}"
+                    ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
+                    HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                    VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
+                    SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+            </Border>
+        </ControlTemplate>
 
+        <Style TargetType="ListViewItem">
+            <Setter Property="Template" Value="{StaticResource ItemTemplate}" />
+        </Style>
+
+        <DataTemplate x:Key="ItemDataTemplate">
+            <CheckBox
+                x:Name="checkbox"
+                Content="{Binding}"
+                IsChecked="{Binding	RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <StackPanel>
+            <ListView
+                x:Name="checkedListView"
+                SelectionMode="Multiple"
+                ItemsSource="{Binding}"
+                ItemTemplate="{StaticResource ItemDataTemplate}"
+                CheckBox.Unchecked="OnUncheckItem" 
+                CheckBox.Checked="checkedListView_Checked"/>
+            <Button Content="Button" Click="Button_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

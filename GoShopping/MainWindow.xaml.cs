@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,20 +16,7 @@ namespace GoShopping
         public MainWindow()
         {
             InitializeComponent();
-            dynamicCheckBox();
-        }
-
-        private void dynamicCheckBox()
-        {
-            GoShoppingDbContext context = new GoShoppingDbContext();
-            var itemList = context.Dishes.ToList();
-
-            foreach (var item in itemList)
-            {
-                CheckBox chk=new CheckBox();
-                chk.Content = item.Name.ToString();
-                st1.Children.Add(chk);
-            }
+            DataContext = context.Dishes.Select(x => x.Name).ToList();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -66,6 +55,21 @@ namespace GoShopping
 
 
             //dataGrid1.ItemsSource = query.ToList();
+        }
+
+        private void OnUncheckItem(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void checkedListView_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = checkedListView.SelectedItems;
         }
     }
 }
