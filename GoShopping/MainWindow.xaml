@@ -8,6 +8,7 @@
         Title="MainWindow" Height="450" Width="800"
         Loaded="Window_Loaded">
     <Grid>
-        <DataGrid Name="dataGrid1" HorizontalAlignment="Left" Height="340" Margin="56,38,0,0" VerticalAlignment="Top" Width="684"/>
+        <StackPanel x:Name="st1"></StackPanel>
+
     </Grid>
 </Window>
