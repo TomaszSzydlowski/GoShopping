@@ -9,6 +9,6 @@
       Title="ShoppingListPage" Height="600" Width="350">
 
     <Grid>
-       <TextBox Text="tu bedzie lista"></TextBox> 
+        <TextBox Text="tu bedzie lista"></TextBox> 
     </Grid>
 </Page>

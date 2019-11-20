@@ -38,7 +38,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="Auto"/>
@@ -59,9 +59,9 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-            <Button Content="+" ></Button>
-        </StackPanel>
+        <Button Content="+" Grid.Row="1" Grid.Column="1"></Button>
+        <Button Content="❤" Grid.Row="1" Grid.Column="3"></Button>
+        <Button Content="s" Grid.Row="1" Grid.Column="5"></Button>
         <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="12">
             <ListView
                 x:Name="checkedListView"
@@ -72,6 +72,6 @@
                 CheckBox.Checked="checkedListView_Checked" FontFamily="Segoe UI Light" FontSize="16" BorderBrush="{x:Null}"/>
         </StackPanel>
         <Button Content="Go!" Grid.Row="4" Grid.Column="9"  Grid.ColumnSpan="3" Click="Button_Click"/>
-        <Frame Grid.Row="1" Grid.RowSpan="2" Name="Main" Height="100" NavigationUIVisibility="Hidden"/>
+        <Frame Grid.Row="3" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="12" Name="Main" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
