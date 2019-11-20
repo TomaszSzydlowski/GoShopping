@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoShopping"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="350">
+        Title="GoShopping" Height="600" Width="350">
     <Window.Resources>
         <ControlTemplate x:Key="ItemTemplate" TargetType="ListViewItem">
             <Border
@@ -35,16 +35,43 @@
         </DataTemplate>
     </Window.Resources>
     <Grid>
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15" />
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+            <Button Content="+" ></Button>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="12">
             <ListView
                 x:Name="checkedListView"
                 SelectionMode="Multiple"
                 ItemsSource="{Binding}"
                 ItemTemplate="{StaticResource ItemDataTemplate}"
                 CheckBox.Unchecked="OnUncheckItem" 
-                CheckBox.Checked="checkedListView_Checked" FontFamily="Segoe UI Light" FontSize="16"/>
-            <Button Content="Button" Click="Button_Click"/>
-            <Frame Name="Main" Height="100" NavigationUIVisibility="Hidden"/>
+                CheckBox.Checked="checkedListView_Checked" FontFamily="Segoe UI Light" FontSize="16" BorderBrush="{x:Null}"/>
         </StackPanel>
+        <Button Content="Go!" Grid.Row="4" Grid.Column="9"  Grid.ColumnSpan="3" Click="Button_Click"/>
+        <Frame Grid.Row="1" Grid.RowSpan="2" Name="Main" Height="100" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
