@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoShopping"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        Loaded="Window_Loaded">
+        Title="MainWindow" Height="600" Width="350">
     <Window.Resources>
         <ControlTemplate x:Key="ItemTemplate" TargetType="ListViewItem">
             <Border
@@ -43,8 +42,9 @@
                 ItemsSource="{Binding}"
                 ItemTemplate="{StaticResource ItemDataTemplate}"
                 CheckBox.Unchecked="OnUncheckItem" 
-                CheckBox.Checked="checkedListView_Checked"/>
+                CheckBox.Checked="checkedListView_Checked" FontFamily="Segoe UI Light" FontSize="16"/>
             <Button Content="Button" Click="Button_Click"/>
+            <Frame Name="Main" Height="100" NavigationUIVisibility="Hidden"/>
         </StackPanel>
     </Grid>
 </Window>

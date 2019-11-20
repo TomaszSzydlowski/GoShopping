@@ -70,6 +70,7 @@ namespace GoShopping
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var selected = checkedListView.SelectedItems;
+            Main.Content=new ShoppingListPage();
         }
     }
 }
