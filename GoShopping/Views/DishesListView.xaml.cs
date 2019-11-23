@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GoShopping.ViewModels;
 
 namespace GoShopping.Views
 {
@@ -30,12 +31,12 @@ namespace GoShopping.Views
 
         private void OnUncheckItem(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            DishesListViewModel.SelectedDishes = CheckedListView.SelectedItems;
         }
 
         private void checkedListView_Checked(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            DishesListViewModel.SelectedDishes=CheckedListView.SelectedItems;
         }
     }
 }

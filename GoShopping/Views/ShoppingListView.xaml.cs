@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GoShopping.ViewModels;
 
 namespace GoShopping.Views
 {
@@ -20,9 +21,11 @@ namespace GoShopping.Views
     /// </summary>
     public partial class ShoppingListView : UserControl
     {
+        ShoppingListViewModel slViewModel=new ShoppingListViewModel();
         public ShoppingListView()
         {
             InitializeComponent();
+            DataContext = slViewModel;
         }
     }
 }

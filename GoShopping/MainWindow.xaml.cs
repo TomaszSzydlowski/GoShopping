@@ -9,12 +9,11 @@ namespace GoShopping
     /// </summary>
     public partial class MainWindow : Window
     {
-        GoShoppingDbContext context = new GoShoppingDbContext();
-
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new DishesListViewModel();
+            DataContext = new DishesListViewModel(); ;
+            
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -53,16 +52,6 @@ namespace GoShopping
 
 
             //dataGrid1.ItemsSource = query.ToList();
-        }
-
-        private void OnUncheckItem(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void checkedListView_Checked(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

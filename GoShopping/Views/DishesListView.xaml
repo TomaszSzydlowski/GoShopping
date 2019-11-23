@@ -42,6 +42,6 @@
                 ItemTemplate="{StaticResource ItemDataTemplate}"
                 CheckBox.Unchecked="OnUncheckItem" 
                 CheckBox.Checked="checkedListView_Checked" FontFamily="Segoe UI Light" FontSize="16" BorderBrush="{x:Null}"/>
-        </StackPanel>    
+        </StackPanel>
     </Grid>
 </UserControl>

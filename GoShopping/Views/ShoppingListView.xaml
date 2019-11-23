@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:GoShopping.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="BlueViolet">
-            
+    <Grid >
+            <TextBox Text="{Binding Path=text}"></TextBox>
     </Grid>
 </UserControl>
