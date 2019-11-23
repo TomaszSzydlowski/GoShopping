@@ -4,34 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoShopping"
+        xmlns:viewmodels="clr-namespace:GoShopping.ViewModels"
+        xmlns:views="clr-namespace:GoShopping.Views"
         mc:Ignorable="d"
         Title="GoShopping" Height="600" Width="350">
     <Window.Resources>
-        <ControlTemplate x:Key="ItemTemplate" TargetType="ListViewItem">
-            <Border
-                BorderThickness="{TemplateBinding Border.BorderThickness}"
-                Padding="{TemplateBinding Control.Padding}"
-                BorderBrush="{TemplateBinding Border.BorderBrush}"
-                Background="{TemplateBinding Panel.Background}"
-                SnapsToDevicePixels="True">
-                <ContentPresenter
-                    Content="{TemplateBinding ContentControl.Content}"
-                    ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
-                    HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
-                    VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
-                    SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
-            </Border>
-        </ControlTemplate>
-
-        <Style TargetType="ListViewItem">
-            <Setter Property="Template" Value="{StaticResource ItemTemplate}" />
-        </Style>
-
-        <DataTemplate x:Key="ItemDataTemplate">
-            <CheckBox
-                x:Name="checkbox"
-                Content="{Binding}"
-                IsChecked="{Binding	RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />
+        <DataTemplate x:Name="shoppingListViewTemplate" DataType="{x:Type viewmodels:ShoppingListViewModel}">
+            <views:ShoppingListView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="dishesListViewTemplate" DataType="{x:Type viewmodels:DishesListViewModel}">
+            <views:DishesListView DataContext="{Binding}"/>
         </DataTemplate>
     </Window.Resources>
     <Grid>
@@ -39,39 +21,29 @@
             <RowDefinition Height="10"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="300"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="15" />
-            <ColumnDefinition Width="30" />
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="30" />
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="30" />
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="30" />
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="30" />
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="30" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="1.4*"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="1.4*"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="1.4*"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="1.4*"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="1.4*"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="1.4*"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Button Content="+" Grid.Row="1" Grid.Column="1"></Button>
         <Button Content="❤" Grid.Row="1" Grid.Column="3"></Button>
         <Button Content="s" Grid.Row="1" Grid.Column="5"></Button>
-        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="12">
-            <ListView
-                x:Name="checkedListView"
-                SelectionMode="Multiple"
-                ItemsSource="{Binding}"
-                ItemTemplate="{StaticResource ItemDataTemplate}"
-                CheckBox.Unchecked="OnUncheckItem" 
-                CheckBox.Checked="checkedListView_Checked" FontFamily="Segoe UI Light" FontSize="16" BorderBrush="{x:Null}"/>
-        </StackPanel>
         <Button Content="Go!" Grid.Row="4" Grid.Column="9"  Grid.ColumnSpan="3" Click="Button_Click"/>
-        <Frame Grid.Row="3" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="12" Name="Main" NavigationUIVisibility="Hidden"/>
+        <ContentControl Grid.Row="3" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="11" Content="{Binding}"/>
     </Grid>
 </Window>

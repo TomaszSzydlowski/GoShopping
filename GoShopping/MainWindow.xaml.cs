@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
+using GoShopping.ViewModels;
 
 namespace GoShopping
 {
@@ -16,7 +14,7 @@ namespace GoShopping
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = context.Dishes.Select(x => x.Name).ToList();
+            DataContext = new DishesListViewModel();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -69,8 +67,7 @@ namespace GoShopping
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var selected = checkedListView.SelectedItems;
-            Main.Content=new ShoppingListPage();
+            DataContext = new ShoppingListViewModel();
         }
     }
 }
