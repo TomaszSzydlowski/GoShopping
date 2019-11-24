@@ -17,7 +17,6 @@ namespace GoShopping.Views
         {
             InitializeComponent();
             DataContext = context.Dishes.Select(x => x.Name).ToList();
-
         }
 
         private void OnUncheckItem(object sender, RoutedEventArgs e)

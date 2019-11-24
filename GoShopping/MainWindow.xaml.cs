@@ -11,13 +11,18 @@ namespace GoShopping
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new DishesListViewModel(); ;
+            DataContext = new DishesListViewModel();
             
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Go_Click(object sender, RoutedEventArgs e)
         {
             DataContext = new ShoppingListViewModel();
+        }
+
+        private void Home_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new DishesListViewModel();
         }
     }
 }
