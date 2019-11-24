@@ -24,5 +24,10 @@ namespace GoShopping
         {
             DataContext = new DishesListViewModel();
         }
+
+        private void NewDish_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new NewDishViewModel();
+        }
     }
 }
