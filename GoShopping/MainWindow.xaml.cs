@@ -17,17 +17,26 @@ namespace GoShopping
 
         private void Go_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new ShoppingListViewModel();
+            if (Equals(Go.Content, "Go!"))
+            {
+                DataContext = new ShoppingListViewModel();
+            }
+            else if (Equals(Go.Content, "Save"))
+            {
+                DataContext=new DishesListViewModel();
+            }
         }
 
         private void Home_Click(object sender, RoutedEventArgs e)
         {
             DataContext = new DishesListViewModel();
+            Go.Content = "Go!";
         }
 
         private void NewDish_Click(object sender, RoutedEventArgs e)
         {
             DataContext = new NewDishViewModel();
+            Go.Content = "Save";
         }
     }
 }
