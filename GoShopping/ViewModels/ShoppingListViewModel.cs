@@ -13,7 +13,7 @@ namespace GoShopping.ViewModels
 
         public ShoppingListViewModel()
         {
-            var ingredientToBuyList = CreateIngredientToBuyList(GetIngredientsOfSelectedDishes());
+            var ingredientToBuyList = CreateIngredientToBuyDistinctList(GetIngredientsOfSelectedDishes());
             Text = CreateTextToShow(ingredientToBuyList);
         }
 
@@ -34,34 +34,27 @@ namespace GoShopping.ViewModels
             return sb.ToString();
         }
 
-        private List<IngredientToBuy> CreateIngredientToBuyList(List<Recipe> ingredientsOfSelectedDishes)
+        private List<IngredientToBuy> CreateIngredientToBuyDistinctList(List<IngredientToBuy> ingredientsOfSelectedDishes)
         {
             var result = new List<IngredientToBuy>();
 
-            foreach (var recipe in ingredientsOfSelectedDishes)
+            foreach (var ingredient in ingredientsOfSelectedDishes)
             {
-                var ingredientToBuy = new IngredientToBuy
+                if (!result.Any(x => x.Name.Contains(ingredient.Name) && x.Unit.Contains(ingredient.Unit)))
                 {
-                    Name = recipe.IngredientName,
-                    Quantity = recipe.Quantity,
-                    Unit = recipe.UnitName
-                };
-
-                if (!result.Any(x => x.Name.Contains(ingredientToBuy.Name) && x.Unit.Contains(ingredientToBuy.Unit)))
-                {
-                    result.Add(ingredientToBuy);
+                    result.Add(ingredient);
                 }
                 else
                 {
-                    result.Find(x => x.Name.Contains(ingredientToBuy.Name) && x.Unit == ingredientToBuy.Unit).Quantity
-                        += ingredientToBuy.Quantity;
+                    result.Find(x => x.Name.Contains(ingredient.Name) && x.Unit == ingredient.Unit).Quantity
+                        += ingredient.Quantity;
                 }
             }
 
             return result;
         }
 
-        private List<Recipe> GetIngredientsOfSelectedDishes()
+        private List<IngredientToBuy> GetIngredientsOfSelectedDishes()
         {
             var selectedDishes = (from object selectedDish in DishesListViewModel.SelectedDishes select selectedDish.ToString()).ToList();
 
@@ -69,12 +62,12 @@ namespace GoShopping.ViewModels
                          join d in _dbContext.Dishes on i.Dish.DishId equals d.DishId
                          join u in _dbContext.Units on i.Unit.UnitId equals u.UnitId
                          where selectedDishes.Contains(d.Name)
-                         select new Recipe
+                         select new IngredientToBuy
                          {
                              DishName = d.Name,
-                             IngredientName = i.Name,
+                             Name = i.Name,
                              Quantity = i.Quantity,
-                             UnitName = u.Name
+                             Unit = u.Name
                          }
                 ).ToList();
 
