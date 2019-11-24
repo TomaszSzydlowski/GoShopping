@@ -4,10 +4,46 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoShopping"
+        xmlns:viewmodels="clr-namespace:GoShopping.ViewModels"
+        xmlns:views="clr-namespace:GoShopping.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        Loaded="Window_Loaded">
+        Title="GoShopping" Height="600" Width="350">
+    <Window.Resources>
+        <DataTemplate x:Name="shoppingListViewTemplate" DataType="{x:Type viewmodels:ShoppingListViewModel}">
+            <views:ShoppingListView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="dishesListViewTemplate" DataType="{x:Type viewmodels:DishesListViewModel}">
+            <views:DishesListView DataContext="{Binding}"/>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
-        <DataGrid Name="dataGrid1" HorizontalAlignment="Left" Height="340" Margin="56,38,0,0" VerticalAlignment="Top" Width="684"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="1.4*"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="1.4*"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="1.4*"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="1.4*"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="1.4*"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="1.4*"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Button Content="+" Grid.Row="1" Grid.Column="1"></Button>
+        <Button Content="❤" Grid.Row="1" Grid.Column="3"></Button>
+        <Button Content="s" Grid.Row="1" Grid.Column="5"></Button>
+        <Button Content="Go!" Grid.Row="4" Grid.Column="9"  Grid.ColumnSpan="3" Click="Button_Click"/>
+        <ContentControl Grid.Row="3" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="11" Content="{Binding}"/>
     </Grid>
 </Window>

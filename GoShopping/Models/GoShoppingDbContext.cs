@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 
-namespace GoShopping
+namespace GoShopping.Models
 {
     public class GoShoppingDbContext : DbContext
     {

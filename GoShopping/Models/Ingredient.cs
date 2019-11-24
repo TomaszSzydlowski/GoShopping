@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GoShopping
+namespace GoShopping.Models
 {
     public class Ingredient
     {
