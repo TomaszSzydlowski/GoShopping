@@ -64,6 +64,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\IngredientToBuy.cs" />
+    <Compile Include="Models\Recipe.cs" />
     <Compile Include="ViewModels\DishesListViewModel.cs" />
     <Compile Include="ViewModels\ShoppingListViewModel.cs" />
     <Compile Include="Views\DishesListView.xaml.cs">

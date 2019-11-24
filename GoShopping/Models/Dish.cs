@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GoShopping
+namespace GoShopping.Models
 {
     public class Dish
     {
