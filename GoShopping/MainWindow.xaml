@@ -48,6 +48,7 @@
         <Button Content="❤" Grid.Row="1" Grid.Column="5"></Button>
         <Button Content="s" Grid.Row="1" Grid.Column="7"></Button>
         <Button x:Name="Go" Content="Go!" Grid.Row="4" Grid.Column="9"  Grid.ColumnSpan="3" Click="Go_Click"/>
+        <Button x:Name="SaveNewDish" Content="Save" Grid.Row="4" Grid.Column="9"  Grid.ColumnSpan="3" Click="SaveNewDish_Click"/>
         <ContentControl Grid.Row="3" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="11" Content="{Binding}"/>
     </Grid>
 </Window>
