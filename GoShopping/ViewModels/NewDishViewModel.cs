@@ -12,13 +12,13 @@ namespace GoShopping.ViewModels
         public static int[] IngredientQuantities { get; set; }
         public static string[] IngredientUnits { get; set; }
 
-        private short _size = 7; //Number of Ingredients on page
+        private static short _size = 7; //Number of Ingredients on page
 
         private static List<Ingredient> Ingredients { get; set; }
 
-        private readonly GoShoppingDbContext _dbContext = new GoShoppingDbContext();
+        private static readonly GoShoppingDbContext _dbContext = new GoShoppingDbContext();
 
-        public List<string> Units { get; set; }
+        public static List<string> Units { get; set; }
 
         public NewDishViewModel()
         {
@@ -40,7 +40,28 @@ namespace GoShopping.ViewModels
 
         public static void Save()
         {
-            
+            var newDish = new Dish { Name = DishName };
+
+            for (var i = 0; i < _size; i++)
+            {
+                if (!string.IsNullOrWhiteSpace(IngredientNames[i]) && IngredientQuantities[i] > 0 &&
+                    !string.IsNullOrWhiteSpace(IngredientUnits[i]))
+                {
+                    var unitName = IngredientUnits[i];
+                    var unit = _dbContext.Units.First(u => u.Name.Contains(unitName));
+
+                    var ingredients = new Ingredient
+                    {
+                        Dish = newDish,
+                        Name = IngredientNames[i],
+                        Quantity = IngredientQuantities[i],
+                        Unit = unit
+                    };
+
+                    _dbContext.Ingredients.Add(ingredients);
+                    _dbContext.SaveChanges();
+                }
+            }
         }
     }
 }
