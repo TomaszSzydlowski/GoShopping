@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using GoShopping.ViewModels;
 
 namespace GoShopping.Views
@@ -18,23 +19,38 @@ namespace GoShopping.Views
             DataContext = ndvm;
         }
 
-        private void Unit_OnDropDownClosed(object sender, EventArgs e)
+        private void Unit_OnLostFocus(object sender, EventArgs e)
         {
-            var name = ((ComboBox)sender).Name;
+            SetUnit(sender);
+        }
+
+        private static void SetUnit(object sender)
+        {
+            var name = ((ComboBox) sender).Name;
             var number = short.Parse(Regex.Match(name, @"\d+").Value);
             NewDishViewModel.IngredientUnits[number - 1] = ((ComboBox) sender).Text;
         }
 
         private void IngredientName_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            var name = ((TextBox)sender).Name;
+            SetIngredientName(sender);
+        }
+
+        private static void SetIngredientName(object sender)
+        {
+            var name = ((TextBox) sender).Name;
             var number = short.Parse(Regex.Match(name, @"\d+").Value);
-            NewDishViewModel.IngredientNames[number - 1] = ((TextBox)sender).Text;
+            NewDishViewModel.IngredientNames[number - 1] = ((TextBox) sender).Text;
         }
 
         private void IngredientQuantity_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            var name = ((TextBox)sender).Name;
+            SetIngredientQuantity(sender);
+        }
+
+        private static void SetIngredientQuantity(object sender)
+        {
+            var name = ((TextBox) sender).Name;
             var number = short.Parse(Regex.Match(name, @"\d+").Value);
             if (Int32.TryParse(((TextBox) sender).Text, out var quantity))
             {
@@ -44,7 +60,32 @@ namespace GoShopping.Views
 
         private void DishName_OnLostFocus(object sender, RoutedEventArgs e)
         {
+            SetDishName(sender);
+        }
+
+        private static void SetDishName(object sender)
+        {
             NewDishViewModel.DishName = ((TextBox) sender).Text;
+        }
+
+        private void Unit_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            SetUnit(sender);
+        }
+
+        private void DishName_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            SetDishName(sender);
+        }
+
+        private void IngredientName_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            SetIngredientName(sender);
+        }
+
+        private void IngredientQuantity_OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            SetIngredientQuantity(sender);
         }
     }
 }
