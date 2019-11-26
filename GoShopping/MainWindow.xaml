@@ -15,13 +15,16 @@
         <DataTemplate x:Name="dishesListViewTemplate" DataType="{x:Type viewmodels:DishesListViewModel}">
             <views:DishesListView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="newDishViewTemplate" DataType="{x:Type viewmodels:NewDishViewModel}">
+            <views:NewDishView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="300"/>
+            <RowDefinition Height="450"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -41,10 +44,11 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Button x:Name="Home" Content="⌂" Grid.Row="1" Grid.Column="1" Click="Home_Click"></Button>
-        <Button Content="+" Grid.Row="1" Grid.Column="3"></Button>
+        <Button x:Name="NewDish" Content="+" Grid.Row="1" Grid.Column="3" Click="NewDish_Click"/>
         <Button Content="❤" Grid.Row="1" Grid.Column="5"></Button>
         <Button Content="s" Grid.Row="1" Grid.Column="7"></Button>
         <Button x:Name="Go" Content="Go!" Grid.Row="4" Grid.Column="9"  Grid.ColumnSpan="3" Click="Go_Click"/>
+        <Button x:Name="SaveNewDish" Content="Save" Grid.Row="4" Grid.Column="9"  Grid.ColumnSpan="3" Click="SaveNewDish_Click"/>
         <ContentControl Grid.Row="3" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="11" Content="{Binding}"/>
     </Grid>
 </Window>
