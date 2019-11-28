@@ -46,6 +46,7 @@ namespace GoShopping.Views
         {
             var name = ((ComboBox)sender).Name;
             var number = short.Parse(Regex.Match(name, @"\d+").Value);
+            if (NewDishViewModel.IngredientUnits.Count < number) { NewDishViewModel.IngredientUnits.Add(String.Empty); }
             NewDishViewModel.IngredientUnits[number - 1] = ((ComboBox)sender).Text;
         }
 
@@ -58,6 +59,7 @@ namespace GoShopping.Views
         {
             var name = ((TextBox)sender).Name;
             var number = short.Parse(Regex.Match(name, @"\d+").Value);
+            if (NewDishViewModel.IngredientNames.Count < number ) { NewDishViewModel.IngredientNames.Add(String.Empty); }
             NewDishViewModel.IngredientNames[number - 1] = ((TextBox)sender).Text;
         }
 
@@ -70,6 +72,7 @@ namespace GoShopping.Views
         {
             var name = ((TextBox)sender).Name;
             var number = short.Parse(Regex.Match(name, @"\d+").Value);
+            if (NewDishViewModel.IngredientQuantities.Count < number) { NewDishViewModel.IngredientQuantities.Add(0); }
             if (Int32.TryParse(((TextBox)sender).Text, out var quantity))
             {
                 NewDishViewModel.IngredientQuantities[number - 1] = quantity;
