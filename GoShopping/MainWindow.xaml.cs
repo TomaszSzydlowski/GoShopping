@@ -19,7 +19,7 @@ namespace GoShopping
         private void Go_Click(object sender, RoutedEventArgs e)
         {
             DataContext = new ShoppingListViewModel();
-
+            SetWhichMainButtonShow();
         }
 
         private void Home_Click(object sender, RoutedEventArgs e)

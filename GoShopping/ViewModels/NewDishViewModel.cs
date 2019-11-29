@@ -1,7 +1,7 @@
-﻿using System;
+﻿using GoShopping.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using GoShopping.Models;
 
 namespace GoShopping.ViewModels
 {
@@ -16,11 +16,18 @@ namespace GoShopping.ViewModels
         private static readonly GoShoppingDbContext _dbContext = new GoShoppingDbContext();
 
         public static List<string> Units { get; set; }
+        public List<string> DishNameExistingInDB { get; set; }
 
         public NewDishViewModel()
         {
             Units = GetUnits();
+            DishNameExistingInDB = GetExistingDishNameFromDB();
             CreateArrays();
+        }
+
+        private List<string> GetExistingDishNameFromDB()
+        {
+            return _dbContext.Dishes.Select(x => x.Name.ToLower()).ToList();
         }
 
         private void CreateArrays()
@@ -38,7 +45,7 @@ namespace GoShopping.ViewModels
         public static void Save()
         {
             var newDish = new Dish { Name = DishName };
-            var minListCount = new []{IngredientNames.Count, IngredientQuantities.Count, IngredientUnits.Count}.Min();
+            var minListCount = new[] { IngredientNames.Count, IngredientQuantities.Count, IngredientUnits.Count }.Min();
 
             for (var i = 0; i < minListCount; i++)
             {

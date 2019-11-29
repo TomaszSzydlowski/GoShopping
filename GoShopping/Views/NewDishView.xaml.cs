@@ -3,10 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace GoShopping.Views
 {
@@ -27,6 +29,7 @@ namespace GoShopping.Views
             InitializeComponent();
             DataContext = ndvm;
             GetElementsFromView();
+            AddBtn1.IsEnabled = false;
         }
 
         private void GetElementsFromView()
@@ -59,8 +62,8 @@ namespace GoShopping.Views
         {
             var name = ((TextBox)sender).Name;
             var number = short.Parse(Regex.Match(name, @"\d+").Value);
-            if (NewDishViewModel.IngredientNames.Count < number ) { NewDishViewModel.IngredientNames.Add(String.Empty); }
-            NewDishViewModel.IngredientNames[number - 1] = ((TextBox)sender).Text;
+            if (NewDishViewModel.IngredientNames.Count < number) { NewDishViewModel.IngredientNames.Add(String.Empty); }
+            NewDishViewModel.IngredientNames[number - 1] = ((TextBox)sender).Text.ToLower();
         }
 
         private void IngredientQuantity_OnLostFocus(object sender, RoutedEventArgs e)
@@ -153,12 +156,46 @@ namespace GoShopping.Views
         {
             if (!string.IsNullOrWhiteSpace(DishName.Text))
             {
-                ChangeVisibility(Visibility.Visible);
+                AddBtn1.IsEnabled = true;
             }
             else
             {
+                AddBtn1.IsEnabled = false;
+
+            }
+            if(ndvm.DishNameExistingInDB.Any(x => x.ToLower().Equals(((TextBox)sender).Text.ToLower())))
+            {
+                ShowDishNameError(true, "Name existing!");
                 ChangeVisibility(Visibility.Collapsed);
             }
+            else if(string.IsNullOrWhiteSpace(DishName.Text))
+            {
+                ShowDishNameError(true, "Invalid name!");
+                ChangeVisibility(Visibility.Collapsed);
+            }
+            else
+            {
+                ShowDishNameError(false);
+                ChangeVisibility(Visibility.Visible);
+            }
+        }
+
+        private void ShowDishNameError(bool isError, string message = null)
+        {
+            if (isError)
+            {
+                DishNameWarning.Text = message;
+                DishNameWarning.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF8, 0xD7, 0xDA));
+                DishNameWarning.OpacityMask = new SolidColorBrush(Color.FromArgb(0xFF, 0xF5, 0xC6, 0xCB));
+            }
+            else
+            {
+                DishNameWarning.Text = String.Empty;
+                DishNameWarning.Background = new SolidColorBrush(Colors.White);
+                DishNameWarning.OpacityMask = new SolidColorBrush(Colors.White);
+            }
+
+
         }
 
         private void ChangeVisibility(Visibility visibility)
@@ -170,6 +207,24 @@ namespace GoShopping.Views
             IngredientQuantity1.Visibility = visibility;
             Unit1.Visibility = visibility;
             AddBtn1.Visibility = visibility;
+        }
+
+        private void IngredientQuantity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var name = ((TextBox)sender).Name;
+            var number = short.Parse(Regex.Match(name, @"\d+").Value);
+            var element = listTextBoxes.First(x => x.Name.Equals($"IngredientQuantity{number}"));
+
+            if (((TextBox)sender).Text.Any(c => !char.IsDigit(c)))
+            {
+                element.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x72, 0x1c, 0x24));
+                element.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF8, 0xD7, 0xDA));
+            }
+            else
+            {
+                element.Foreground = new SolidColorBrush(Colors.Black);
+                element.Background = new SolidColorBrush(Colors.White);
+            }
         }
     }
 }
