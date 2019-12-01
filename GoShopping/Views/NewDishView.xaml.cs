@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,7 +28,6 @@ namespace GoShopping.Views
             InitializeComponent();
             DataContext = ndvm;
             GetElementsFromView();
-            AddBtn1.IsEnabled = false;
         }
 
         private void GetElementsFromView()
@@ -154,15 +152,6 @@ namespace GoShopping.Views
 
         private void DishName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(DishName.Text))
-            {
-                AddBtn1.IsEnabled = true;
-            }
-            else
-            {
-                AddBtn1.IsEnabled = false;
-
-            }
             if(ndvm.DishNameExistingInDB.Any(x => x.ToLower().Equals(((TextBox)sender).Text.ToLower())))
             {
                 ShowDishNameError(true, "Name existing!");
@@ -213,18 +202,26 @@ namespace GoShopping.Views
         {
             var name = ((TextBox)sender).Name;
             var number = short.Parse(Regex.Match(name, @"\d+").Value);
-            var element = listTextBoxes.First(x => x.Name.Equals($"IngredientQuantity{number}"));
+            var ingredientQuantityTextBox = listTextBoxes.First(x => x.Name.Equals($"IngredientQuantity{number}"));
 
             if (((TextBox)sender).Text.Any(c => !char.IsDigit(c)))
             {
-                element.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x72, 0x1c, 0x24));
-                element.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF8, 0xD7, 0xDA));
+                ingredientQuantityTextBox.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x72, 0x1c, 0x24));
+                ingredientQuantityTextBox.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF8, 0xD7, 0xDA));
             }
             else
             {
-                element.Foreground = new SolidColorBrush(Colors.Black);
-                element.Background = new SolidColorBrush(Colors.White);
+                var ingredientNameTextBox = listTextBoxes.First(x => x.Name.Equals($"IngredientName{number}"));
+                var unitComboBox = listComboBoxes.First(x => x.Name.Equals($"Unit{number}"));
+                if (!string.IsNullOrWhiteSpace(ingredientNameTextBox.Text) && !string.IsNullOrWhiteSpace(unitComboBox.Text))
+                {
+                    var buttonAdd = listButtons.First(x => x.Name.Equals($"AddBtn{number}"));
+                    buttonAdd.IsEnabled = true;
+                }
+                ingredientQuantityTextBox.Foreground = new SolidColorBrush(Colors.Black);
+                ingredientQuantityTextBox.Background = new SolidColorBrush(Colors.White);
             }
+
         }
     }
 }
