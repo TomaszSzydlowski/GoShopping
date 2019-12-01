@@ -118,7 +118,7 @@ namespace GoShopping.Views
             List<FrameworkElement> elements = new List<FrameworkElement>();
 
             ((Button)sender).Visibility = Visibility.Hidden;
-            if (number < listButtons.Select(x=>x.Name.Contains("AddBtn")).Count())
+            if (number < listButtons.Count(x => x.Name.Contains("AddBtn")))
             {
                 elements.Add(listButtons.First(x => x.Name.Equals($"AddBtn{number + 1}")));
             }
