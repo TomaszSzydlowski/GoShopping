@@ -118,7 +118,7 @@ namespace GoShopping.Views
             List<FrameworkElement> elements = new List<FrameworkElement>();
 
             ((Button)sender).Visibility = Visibility.Hidden;
-            if (number < listButtons.Count)
+            if (number < listButtons.Select(x=>x.Name.Contains("AddBtn")).Count())
             {
                 elements.Add(listButtons.First(x => x.Name.Equals($"AddBtn{number + 1}")));
             }
@@ -222,6 +222,11 @@ namespace GoShopping.Views
                 ingredientQuantityTextBox.Background = new SolidColorBrush(Colors.White);
             }
 
+        }
+
+        private void SaveNewDish_Click(object sender, RoutedEventArgs e)
+        {
+            NewDishViewModel.Save();
         }
     }
 }

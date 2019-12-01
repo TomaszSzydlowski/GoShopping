@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GoShopping.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="300">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -48,7 +48,8 @@
             <RowDefinition Height="0.1*"></RowDefinition>
             <RowDefinition Height="0.1*"></RowDefinition>
             <RowDefinition Height="0.2*"></RowDefinition>
-            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Text="Dish Name" FontFamily="Segoe UI Light" FontSize="14"/>
         <TextBox x:Name="DishName" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="DishName_OnLostFocus" LostKeyboardFocus="DishName_LostKeyboardFocus" TextChanged="DishName_TextChanged"></TextBox>
@@ -115,5 +116,6 @@
         <TextBox x:Name="IngredientQuantity9" Grid.Row="28"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus" TextChanged="IngredientQuantity_TextChanged"></TextBox>
         <TextBlock x:Name="TextBlockIngredientUnit9"  Grid.Row="27"  Visibility="Collapsed" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
         <ComboBox x:Name="Unit9" ItemsSource="{Binding Units}" Grid.Row="28"  Visibility="Collapsed" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
+        <Button x:Name="SaveNewDish" Content="Save" Grid.Row="30" Grid.Column="6"  Grid.ColumnSpan="3" Click="SaveNewDish_Click"/>
     </Grid>
 </UserControl>
