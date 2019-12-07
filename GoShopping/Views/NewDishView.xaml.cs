@@ -135,11 +135,8 @@ namespace GoShopping.Views
 
         private short GetCurrentLineOfElements(object sender)
         {
-            short result = 0;
             var name = ((FrameworkElement)sender).Name;
-            short.TryParse(Regex.Match(name, @"\d+").Value, out result);
-
-            return result;
+            return short.Parse(Regex.Match(name, @"\d+").Value);
         }
 
 
