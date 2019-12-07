@@ -23,6 +23,8 @@ namespace GoShopping.Views
         List<TextBlock> listTextBlockes = new List<TextBlock>();
         List<ComboBox> listComboBoxes = new List<ComboBox>();
 
+        static Dictionary<string, bool> validDictionary = new Dictionary<string, bool>();
+
         public NewDishView()
         {
             InitializeComponent();
@@ -41,14 +43,135 @@ namespace GoShopping.Views
         private void Unit_OnLostFocus(object sender, EventArgs e)
         {
             SetUnit(sender);
+            CheckValid(sender);
         }
 
         private static void SetUnit(object sender)
         {
-            var name = ((ComboBox)sender).Name;
-            var number = short.Parse(Regex.Match(name, @"\d+").Value);
+            var senderName = ((ComboBox)sender).Name;
+            var number = short.Parse(Regex.Match(senderName, @"\d+").Value);
             if (NewDishViewModel.IngredientUnits.Count < number) { NewDishViewModel.IngredientUnits.Add(String.Empty); }
             NewDishViewModel.IngredientUnits[number - 1] = ((ComboBox)sender).Text;
+        }
+
+        private void CheckValid(object sender)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                if (validDictionary.ContainsKey(comboBox.Name))
+                {
+                    validDictionary[comboBox.Name] = !string.IsNullOrWhiteSpace(comboBox.Text);
+                }
+                else
+                {
+                    validDictionary.Add(comboBox.Name, !string.IsNullOrWhiteSpace(comboBox.Text));
+                }
+            }
+            if (sender is TextBox textBox)
+            {
+                if (textBox.Name.Contains("DishName"))
+                {
+                    if (validDictionary.ContainsKey(textBox.Name))
+                    {
+                        validDictionary[textBox.Name] = !string.IsNullOrWhiteSpace(textBox.Text) && !ndvm.DishNameExistingInDB.Any(x => x.ToLower().Equals(((TextBox)sender).Text.ToLower()));
+                    }
+                    else
+                    {
+                        validDictionary.Add(textBox.Name, !string.IsNullOrWhiteSpace(textBox.Text) && !ndvm.DishNameExistingInDB.Any(x => x.ToLower().Equals(((TextBox)sender).Text.ToLower())));
+                    }
+
+                    var lastLineOfElements = GetLastLineOfElements();
+                    SaveNewDishBtn.IsEnabled = isButtonAddEnable(lastLineOfElements) && !validDictionary.Values.Contains(false);
+                    return;
+                }
+                if (textBox.Name.Contains("IngredientQuantity"))
+                {
+                    if (validDictionary.ContainsKey(textBox.Name))
+                    {
+                        validDictionary[textBox.Name] = textBox.Text.All(char.IsDigit) && !string.IsNullOrWhiteSpace(textBox.Text);
+                    }
+                    else
+                    {
+                        validDictionary.Add(textBox.Name, textBox.Text.All(char.IsDigit) && !string.IsNullOrWhiteSpace(textBox.Text));
+                    }
+                }
+                if (textBox.Name.Contains("IngredientName"))
+                {
+                    if (validDictionary.ContainsKey(textBox.Name))
+                    {
+                        validDictionary[textBox.Name] = !string.IsNullOrWhiteSpace(textBox.Text);
+                    }
+                    else
+                    {
+                        validDictionary.Add(textBox.Name, !string.IsNullOrWhiteSpace(textBox.Text));
+                    }
+                }
+
+                ShowTextBoxError(textBox);
+            }
+
+            var currentLineOfElements = GetCurrentLineOfElements(sender);
+            var currentButtonAddInLineOfElements = GetCurrentButtonAddInLineOfElements(currentLineOfElements);
+            if (!(currentButtonAddInLineOfElements is null))
+            {
+                currentButtonAddInLineOfElements.IsEnabled = isButtonAddEnable(currentLineOfElements);
+            }
+            SaveNewDishBtn.IsEnabled = isButtonAddEnable(currentLineOfElements) && validDictionary["DishName"];
+        }
+
+        private int GetLastLineOfElements()
+        {
+            var arrayWithOutDishName = validDictionary.Keys.Where(s => !s.Contains("DishName")).ToArray();
+            if (arrayWithOutDishName.Length == 0) return 1;
+            short[] arrayOfRowsNumbers = arrayWithOutDishName.Select(s=>short.Parse(Regex.Match(s, @"\d+").Value)).ToArray();
+            return arrayOfRowsNumbers.Max();
+
+        }
+
+        private Button GetCurrentButtonAddInLineOfElements(int number)
+        {
+            return listButtons.FirstOrDefault(x => x.Name.Equals($"AddBtn{number}"));
+        }
+
+        private short GetCurrentLineOfElements(object sender)
+        {
+            short result = 0;
+            var name = ((FrameworkElement)sender).Name;
+            short.TryParse(Regex.Match(name, @"\d+").Value, out result);
+
+            return result;
+        }
+
+
+        private bool isButtonAddEnable(object number)
+        {
+            var isValidIngredientName = validDictionary.ContainsKey($"IngredientName{number}") && validDictionary[$"IngredientName{number}"];
+            var isValidIngredientQuantity = validDictionary.ContainsKey($"IngredientQuantity{number}") && validDictionary[$"IngredientQuantity{number}"];
+            var isValidUnit = validDictionary.ContainsKey($"Unit{number}") && validDictionary[$"Unit{number}"];
+
+            return isValidIngredientName && isValidIngredientQuantity && isValidUnit;
+        }
+
+        private static void ShowTextBoxError(TextBox textBox)
+        {
+            try
+            {
+                if (validDictionary[textBox.Name])
+                {
+                    textBox.Foreground = new SolidColorBrush(Colors.Black);
+                    textBox.Background = new SolidColorBrush(Colors.White);
+                }
+                else
+                {
+                    textBox.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x72, 0x1c, 0x24));
+                    textBox.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF8, 0xD7, 0xDA));
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         private void IngredientName_OnLostFocus(object sender, RoutedEventArgs e)
@@ -150,14 +273,14 @@ namespace GoShopping.Views
             }
         }
 
-        private void DishName_TextChanged(object sender, TextChangedEventArgs e)
+        private void DishName_TextChanged(object sender, TextChangedEventArgs e)                //TODO
         {
-            if(ndvm.DishNameExistingInDB.Any(x => x.ToLower().Equals(((TextBox)sender).Text.ToLower())))
+            if (ndvm.DishNameExistingInDB.Any(x => x.ToLower().Equals(((TextBox)sender).Text.ToLower())))
             {
                 ShowDishNameError(true, "Name existing!");
                 ChangeVisibility(Visibility.Collapsed);
             }
-            else if(string.IsNullOrWhiteSpace(DishName.Text))
+            else if (string.IsNullOrWhiteSpace(DishName.Text))
             {
                 ShowDishNameError(true, "Invalid name!");
                 ChangeVisibility(Visibility.Collapsed);
@@ -167,6 +290,7 @@ namespace GoShopping.Views
                 ShowDishNameError(false);
                 ChangeVisibility(Visibility.Visible);
             }
+            CheckValid(sender);
         }
 
         private void ShowDishNameError(bool isError, string message = null)
@@ -195,38 +319,35 @@ namespace GoShopping.Views
             IngredientName1.Visibility = visibility;
             IngredientQuantity1.Visibility = visibility;
             Unit1.Visibility = visibility;
-            AddBtn1.Visibility = visibility;
+
+            var buttonAdd = listButtons.First(x => x.Name.Equals($"AddBtn{GetLastLineOfElements()}"));
+            buttonAdd.Visibility = visibility;
+            if (visibility == Visibility.Collapsed)
+            {
+                listButtons.Where(b => b.Name.Contains("Add")).ToList().ForEach(c => c.Visibility = visibility);
+                listTextBoxes.Where(b => b.Name.Contains("Ingredient")).ToList().ForEach(c => c.Visibility = visibility);
+                listTextBlockes.Where(b => b.Name.Contains("Ingredient")).ToList().ForEach(c => c.Visibility = visibility);
+                listComboBoxes.ForEach(c => c.Visibility = visibility);
+            }
+            else
+            {
+                //TODO
+            }
         }
 
         private void IngredientQuantity_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var name = ((TextBox)sender).Name;
-            var number = short.Parse(Regex.Match(name, @"\d+").Value);
-            var ingredientQuantityTextBox = listTextBoxes.First(x => x.Name.Equals($"IngredientQuantity{number}"));
-
-            if (((TextBox)sender).Text.Any(c => !char.IsDigit(c)))
-            {
-                ingredientQuantityTextBox.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x72, 0x1c, 0x24));
-                ingredientQuantityTextBox.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF8, 0xD7, 0xDA));
-            }
-            else
-            {
-                var ingredientNameTextBox = listTextBoxes.First(x => x.Name.Equals($"IngredientName{number}"));
-                var unitComboBox = listComboBoxes.First(x => x.Name.Equals($"Unit{number}"));
-                if (!string.IsNullOrWhiteSpace(ingredientNameTextBox.Text) && !string.IsNullOrWhiteSpace(unitComboBox.Text))
-                {
-                    var buttonAdd = listButtons.First(x => x.Name.Equals($"AddBtn{number}"));
-                    buttonAdd.IsEnabled = true;
-                }
-                ingredientQuantityTextBox.Foreground = new SolidColorBrush(Colors.Black);
-                ingredientQuantityTextBox.Background = new SolidColorBrush(Colors.White);
-            }
-
+            CheckValid(sender);
         }
 
         private void SaveNewDish_Click(object sender, RoutedEventArgs e)
         {
             NewDishViewModel.Save();
+        }
+
+        private void IngredientName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CheckValid(sender);
         }
     }
 }
