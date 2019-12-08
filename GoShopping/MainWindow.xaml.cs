@@ -23,6 +23,7 @@ namespace GoShopping
         private void Home_Click(object sender, RoutedEventArgs e)
         {
             DataContext = new DishesListViewModel();
+            Go.Visibility = Visibility.Visible;
         }
 
         private void NewDish_Click(object sender, RoutedEventArgs e)
