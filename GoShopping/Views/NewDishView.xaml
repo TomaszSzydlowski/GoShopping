@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GoShopping.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="300">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -15,11 +15,13 @@
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="0.2*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+            <ColumnDefinition Width="0.5*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*"></RowDefinition>
             <RowDefinition Height="0.2*"></RowDefinition>
-            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="15"></RowDefinition>
             <RowDefinition Height="0.1*"></RowDefinition>
             <RowDefinition Height="0.2*"></RowDefinition>
             <RowDefinition Height="0.1*"></RowDefinition>
@@ -40,52 +42,80 @@
             <RowDefinition Height="0.1*"></RowDefinition>
             <RowDefinition Height="0.1*"></RowDefinition>
             <RowDefinition Height="0.2*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="0"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Text="Dish Name" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="DishName" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="DishName_OnLostFocus" LostKeyboardFocus="DishName_LostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="IngredientName1" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="IngredientQuantity1" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="3" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
-        <ComboBox x:Name="Unit1" ItemsSource="{Binding Units}" Grid.Row="4" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus"/>
-        <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="IngredientName2" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="IngredientQuantity2" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="6" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
-        <ComboBox x:Name="Unit2" ItemsSource="{Binding Units}" Grid.Row="7" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
-        <TextBlock Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="IngredientName3" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="IngredientQuantity3" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="9" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
-        <ComboBox x:Name="Unit3" ItemsSource="{Binding Units}" Grid.Row="10" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
-        <TextBlock Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="IngredientName4" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="12" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="IngredientQuantity4" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="12" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
-        <ComboBox x:Name="Unit4" ItemsSource="{Binding Units}" Grid.Row="13" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
-        <TextBlock Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="IngredientName5" Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="15" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="IngredientQuantity5" Grid.Row="16" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="15" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
-        <ComboBox x:Name="Unit5" ItemsSource="{Binding Units}" Grid.Row="16" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
-        <TextBlock Grid.Row="18" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="IngredientName6" Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="18" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="IngredientQuantity6" Grid.Row="19" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="18" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
-        <ComboBox x:Name="Unit6" ItemsSource="{Binding Units}" Grid.Row="19" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
-        <TextBlock Grid.Row="21" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="IngredientName7" Grid.Row="22" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="21" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
-        <TextBox x:Name="IngredientQuantity7" Grid.Row="22" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus"></TextBox>
-        <TextBlock Grid.Row="21" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
-        <ComboBox x:Name="Unit7" ItemsSource="{Binding Units}" Grid.Row="22" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
+        <TextBox x:Name="DishName" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="DishName_OnLostFocus" LostKeyboardFocus="DishName_LostKeyboardFocus" TextChanged="DishName_TextChanged"></TextBox>
+        <TextBlock x:Name="DishNameWarning" Grid.Row="1" Grid.ColumnSpan="4" Grid.Column="3" FontFamily="Segoe UI Light" FontSize="14" Foreground="#FF721C24" TextAlignment="Center"/>
+        <TextBlock x:Name="TextBlockIngredientName1" Visibility="Visible" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientName1" Visibility="Visible" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus" TextChanged="IngredientName_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientQuantity1" Visibility="Visible" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientQuantity1" Visibility="Visible" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus" TextChanged="IngredientQuantity_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientUnit1" Visibility="Visible" Grid.Row="3" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
+        <ComboBox x:Name="Unit1" Visibility="Visible" ItemsSource="{Binding Units}" Grid.Row="4" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus"/>
+        <Button x:Name="AddBtn1" Visibility="Visible" Content="+" IsEnabled="False" Grid.Row="4" Grid.Column="8" Click="AddBtn_Click"></Button>
+        <TextBlock x:Name="TextBlockIngredientName2"  Grid.Row="6"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientName2" Grid.Row="7"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus" TextChanged="IngredientName_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientQuantity2"  Grid.Row="6"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientQuantity2" Grid.Row="7"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus" TextChanged="IngredientQuantity_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientUnit2"  Grid.Row="6"  Visibility="Collapsed" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
+        <ComboBox x:Name="Unit2" ItemsSource="{Binding Units}" Grid.Row="7"  Visibility="Collapsed" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
+        <TextBlock x:Name="TextBlockIngredientName3"  Grid.Row="9"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
+        <Button x:Name="AddBtn2" Visibility="Collapsed" Content="+" IsEnabled="False" Grid.Row="7" Grid.Column="8" Click="AddBtn_Click"></Button>
+        <TextBox x:Name="IngredientName3" Grid.Row="10"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus" TextChanged="IngredientName_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientQuantity3"  Grid.Row="9"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientQuantity3" Grid.Row="10"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus" TextChanged="IngredientQuantity_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientUnit3"  Grid.Row="9"  Visibility="Collapsed" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
+        <ComboBox x:Name="Unit3" ItemsSource="{Binding Units}" Grid.Row="10"  Visibility="Collapsed" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
+        <TextBlock x:Name="TextBlockIngredientName4"  Grid.Row="12"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
+        <Button x:Name="AddBtn3" Visibility="Collapsed" Content="+" IsEnabled="False" Grid.Row="10" Grid.Column="8" Click="AddBtn_Click"></Button>
+        <TextBox x:Name="IngredientName4" Grid.Row="13"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus" TextChanged="IngredientName_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientQuantity4"  Grid.Row="12"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientQuantity4" Grid.Row="13"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus" TextChanged="IngredientQuantity_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientUnit4"  Grid.Row="12"  Visibility="Collapsed" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
+        <ComboBox x:Name="Unit4" ItemsSource="{Binding Units}" Grid.Row="13"  Visibility="Collapsed" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
+        <Button x:Name="AddBtn4" Visibility="Collapsed" Content="+" IsEnabled="False" Grid.Row="13" Grid.Column="8" Click="AddBtn_Click"></Button>
+        <TextBlock x:Name="TextBlockIngredientName5"  Grid.Row="15"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientName5" Grid.Row="16"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus" TextChanged="IngredientName_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientQuantity5"  Grid.Row="15"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientQuantity5" Grid.Row="16"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus" TextChanged="IngredientQuantity_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientUnit5"  Grid.Row="15"  Visibility="Collapsed" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
+        <ComboBox x:Name="Unit5" ItemsSource="{Binding Units}" Grid.Row="16"  Visibility="Collapsed" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
+        <Button x:Name="AddBtn5" Visibility="Collapsed" Content="+" IsEnabled="False" Grid.Row="16" Grid.Column="8" Click="AddBtn_Click"></Button>
+        <TextBlock x:Name="TextBlockIngredientName6"  Grid.Row="18"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientName6" Grid.Row="19"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus" TextChanged="IngredientName_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientQuantity6"  Grid.Row="18"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientQuantity6" Grid.Row="19"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus" TextChanged="IngredientQuantity_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientUnit6"  Grid.Row="18"  Visibility="Collapsed" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
+        <ComboBox x:Name="Unit6" ItemsSource="{Binding Units}" Grid.Row="19"  Visibility="Collapsed" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
+        <Button x:Name="AddBtn6" Visibility="Collapsed" Content="+" IsEnabled="False" Grid.Row="19" Grid.Column="8" Click="AddBtn_Click"></Button>
+        <TextBlock x:Name="TextBlockIngredientName7"  Grid.Row="21"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientName7" Grid.Row="22"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus" TextChanged="IngredientName_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientQuantity7"  Grid.Row="21"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientQuantity7" Grid.Row="22"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus" TextChanged="IngredientQuantity_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientUnit7"  Grid.Row="21"  Visibility="Collapsed" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
+        <ComboBox x:Name="Unit7" ItemsSource="{Binding Units}" Grid.Row="22"  Visibility="Collapsed" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
+        <Button x:Name="AddBtn7" Visibility="Collapsed" Content="+" IsEnabled="False" Grid.Row="22" Grid.Column="8" Click="AddBtn_Click"></Button>
+        <TextBlock x:Name="TextBlockIngredientName8"  Grid.Row="24"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientName8" Grid.Row="25"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus" TextChanged="IngredientName_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientQuantity8"  Grid.Row="24"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientQuantity8" Grid.Row="25"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus" TextChanged="IngredientQuantity_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientUnit8"  Grid.Row="24"  Visibility="Collapsed" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
+        <ComboBox x:Name="Unit8" ItemsSource="{Binding Units}" Grid.Row="25"  Visibility="Collapsed" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
+        <Button x:Name="AddBtn8" Visibility="Collapsed" Content="+" IsEnabled="False" Grid.Row="25" Grid.Column="8" Click="AddBtn_Click"></Button>
+        <TextBlock x:Name="TextBlockIngredientName9"  Grid.Row="27"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" Text="Ingredient" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientName9" Grid.Row="28"  Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientName_OnLostFocus" LostKeyboardFocus="IngredientName_LostKeyboardFocus" TextChanged="IngredientName_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientQuantity9"  Grid.Row="27"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" Text="Quantity" FontFamily="Segoe UI Light" FontSize="14"/>
+        <TextBox x:Name="IngredientQuantity9" Grid.Row="28"  Visibility="Collapsed" Grid.Column="3" Grid.ColumnSpan="2" FontSize="14" FontFamily="Segoe UI Light" LostFocus="IngredientQuantity_OnLostFocus" LostKeyboardFocus="IngredientQuantity_OnLostKeyboardFocus" TextChanged="IngredientQuantity_TextChanged"></TextBox>
+        <TextBlock x:Name="TextBlockIngredientUnit9"  Grid.Row="27"  Visibility="Collapsed" Grid.Column="6" Text="Unit" FontFamily="Segoe UI Light" FontSize="14"/>
+        <ComboBox x:Name="Unit9" ItemsSource="{Binding Units}" Grid.Row="28"  Visibility="Collapsed" Grid.Column="6" DropDownClosed="Unit_OnLostFocus" LostKeyboardFocus="Unit_LostKeyboardFocus" />
+        <Button x:Name="SaveNewDishBtn" Content="Save" IsEnabled="False" Grid.Row="30" Grid.Column="6"  Grid.ColumnSpan="3" Click="SaveNewDish_Click"/>
     </Grid>
 </UserControl>

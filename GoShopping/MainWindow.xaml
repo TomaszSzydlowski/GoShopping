@@ -24,7 +24,8 @@
             <RowDefinition Height="10"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="450"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="15"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -47,8 +48,7 @@
         <Button x:Name="NewDish" Content="+" Grid.Row="1" Grid.Column="3" Click="NewDish_Click"/>
         <Button Content="❤" Grid.Row="1" Grid.Column="5"></Button>
         <Button Content="s" Grid.Row="1" Grid.Column="7"></Button>
-        <Button x:Name="Go" Content="Go!" Grid.Row="4" Grid.Column="9"  Grid.ColumnSpan="3" Click="Go_Click"/>
-        <Button x:Name="SaveNewDish" Content="Save" Grid.Row="4" Grid.Column="9"  Grid.ColumnSpan="3" Click="SaveNewDish_Click"/>
-        <ContentControl Grid.Row="3" Grid.RowSpan="3" Grid.Column="1" Grid.ColumnSpan="11" Content="{Binding}"/>
+        <Button x:Name="Go" Content="Go!" Grid.Row="5" Grid.Column="9"  Grid.ColumnSpan="3" Click="Go_Click"/>
+        <ContentControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="11" Content="{Binding}"/>
     </Grid>
 </Window>
