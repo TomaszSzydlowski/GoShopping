@@ -69,7 +69,7 @@ namespace GoShopping.Views
             }
             if (sender is TextBox textBox)
             {
-                if (textBox.Name.Contains(DishName.Name))
+                if (textBox.Name.Contains("DishName"))
                 {
                     if (validDictionary.ContainsKey(textBox.Name))
                     {
@@ -83,7 +83,6 @@ namespace GoShopping.Views
                     var lastLineOfElements = GetLastLineOfElements();
                     SaveNewDishBtn.IsEnabled = isButtonAddEnable(lastLineOfElements) && !validDictionary.Values.Contains(false);
                     ShowDishNameErrorMessage(sender);
-                    SetVisibilityOfRows(lastLineOfElements);
                     return;
                 }
                 if (textBox.Name.Contains("IngredientQuantity"))
@@ -118,31 +117,7 @@ namespace GoShopping.Views
             {
                 currentButtonAddInLineOfElements.IsEnabled = isButtonAddEnable(currentLineOfElements);
             }
-            SaveNewDishBtn.IsEnabled = isButtonAddEnable(currentLineOfElements) && validDictionary[DishName.Name];
-        }
-
-        private void SetVisibilityOfRows(int lastLineOfElements)
-        {
-            if (validDictionary[DishName.Name])
-            {
-                for (var i = 1; i <= lastLineOfElements; i++)
-                {
-                    listTextBoxes.First(b => b.Name.Contains($"IngredientName{i}")).Visibility = Visibility.Visible;
-                    listTextBoxes.First(b => b.Name.Contains($"IngredientQuantity{i}")).Visibility = Visibility.Visible;
-                    listTextBlockes.First(b => b.Name.Contains($"TextBlockIngredientName{i}")).Visibility = Visibility.Visible;
-                    listTextBlockes.First(b => b.Name.Contains($"TextBlockIngredientQuantity{i}")).Visibility = Visibility.Visible;
-                    listTextBlockes.First(b => b.Name.Contains($"TextBlockIngredientUnit{i}")).Visibility = Visibility.Visible;
-                    listComboBoxes.First(b => b.Name.Contains(i.ToString())).Visibility = Visibility.Visible;
-                }
-                listButtons.First(x => x.Name.Equals($"AddBtn{GetLastLineOfElements()}")).Visibility = Visibility.Visible;
-            }
-            else
-            {
-                listButtons.Where(b => b.Name.Contains("Add")).ToList().ForEach(c => c.Visibility = Visibility.Collapsed);
-                listTextBoxes.Where(b => b.Name.Contains("Ingredient")).ToList().ForEach(c => c.Visibility = Visibility.Collapsed);
-                listTextBlockes.Where(b => b.Name.Contains("Ingredient")).ToList().ForEach(c => c.Visibility = Visibility.Collapsed);
-                listComboBoxes.ForEach(c => c.Visibility = Visibility.Collapsed);
-            }
+            SaveNewDishBtn.IsEnabled = isButtonAddEnable(currentLineOfElements) && validDictionary["DishName"];
         }
 
         private void ShowDishNameErrorMessage(object sender)
@@ -163,7 +138,7 @@ namespace GoShopping.Views
 
         private int GetLastLineOfElements()
         {
-            var arrayWithOutDishName = validDictionary.Keys.Where(s => !s.Contains(DishName.Name)).ToArray();
+            var arrayWithOutDishName = validDictionary.Keys.Where(s => !s.Contains("DishName")).ToArray();
             if (arrayWithOutDishName.Length == 0) return 1;
             short[] arrayOfRowsNumbers = arrayWithOutDishName.Select(s => short.Parse(Regex.Match(s, @"\d+").Value)).ToArray();
             return arrayOfRowsNumbers.Max();
@@ -312,7 +287,7 @@ namespace GoShopping.Views
             }
         }
 
-        private void DishName_TextChanged(object sender, TextChangedEventArgs e)
+        private void DishName_TextChanged(object sender, TextChangedEventArgs e)                //TODO
         {
             CheckValid(sender);
         }
