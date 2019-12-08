@@ -69,7 +69,7 @@ namespace GoShopping.Views
             }
             if (sender is TextBox textBox)
             {
-                if (textBox.Name.Contains("DishName"))
+                if (textBox.Name.Contains(DishName.Name))
                 {
                     if (validDictionary.ContainsKey(textBox.Name))
                     {
@@ -82,6 +82,8 @@ namespace GoShopping.Views
 
                     var lastLineOfElements = GetLastLineOfElements();
                     SaveNewDishBtn.IsEnabled = isButtonAddEnable(lastLineOfElements) && !validDictionary.Values.Contains(false);
+                    ShowDishNameErrorMessage(sender);
+                    SetVisibilityOfRows(lastLineOfElements);
                     return;
                 }
                 if (textBox.Name.Contains("IngredientQuantity"))
@@ -116,14 +118,54 @@ namespace GoShopping.Views
             {
                 currentButtonAddInLineOfElements.IsEnabled = isButtonAddEnable(currentLineOfElements);
             }
-            SaveNewDishBtn.IsEnabled = isButtonAddEnable(currentLineOfElements) && validDictionary["DishName"];
+            SaveNewDishBtn.IsEnabled = isButtonAddEnable(currentLineOfElements) && validDictionary[DishName.Name];
+        }
+
+        private void SetVisibilityOfRows(int lastLineOfElements)
+        {
+            if (validDictionary[DishName.Name])
+            {
+                for (var i = 1; i <= lastLineOfElements; i++)
+                {
+                    listTextBoxes.First(b => b.Name.Contains($"IngredientName{i}")).Visibility = Visibility.Visible;
+                    listTextBoxes.First(b => b.Name.Contains($"IngredientQuantity{i}")).Visibility = Visibility.Visible;
+                    listTextBlockes.First(b => b.Name.Contains($"TextBlockIngredientName{i}")).Visibility = Visibility.Visible;
+                    listTextBlockes.First(b => b.Name.Contains($"TextBlockIngredientQuantity{i}")).Visibility = Visibility.Visible;
+                    listTextBlockes.First(b => b.Name.Contains($"TextBlockIngredientUnit{i}")).Visibility = Visibility.Visible;
+                    listComboBoxes.First(b => b.Name.Contains(i.ToString())).Visibility = Visibility.Visible;
+                }
+                listButtons.First(x => x.Name.Equals($"AddBtn{GetLastLineOfElements()}")).Visibility = Visibility.Visible;
+            }
+            else
+            {
+                listButtons.Where(b => b.Name.Contains("Add")).ToList().ForEach(c => c.Visibility = Visibility.Collapsed);
+                listTextBoxes.Where(b => b.Name.Contains("Ingredient")).ToList().ForEach(c => c.Visibility = Visibility.Collapsed);
+                listTextBlockes.Where(b => b.Name.Contains("Ingredient")).ToList().ForEach(c => c.Visibility = Visibility.Collapsed);
+                listComboBoxes.ForEach(c => c.Visibility = Visibility.Collapsed);
+            }
+        }
+
+        private void ShowDishNameErrorMessage(object sender)
+        {
+            if (ndvm.DishNameExistingInDB.Any(x => x.ToLower().Equals(((TextBox)sender).Text.ToLower())))
+            {
+                ShowDishNameError(true, "Name existing!");
+            }
+            else if (string.IsNullOrWhiteSpace(DishName.Text))
+            {
+                ShowDishNameError(true, "Invalid name!");
+            }
+            else
+            {
+                ShowDishNameError(false);
+            }
         }
 
         private int GetLastLineOfElements()
         {
-            var arrayWithOutDishName = validDictionary.Keys.Where(s => !s.Contains("DishName")).ToArray();
+            var arrayWithOutDishName = validDictionary.Keys.Where(s => !s.Contains(DishName.Name)).ToArray();
             if (arrayWithOutDishName.Length == 0) return 1;
-            short[] arrayOfRowsNumbers = arrayWithOutDishName.Select(s=>short.Parse(Regex.Match(s, @"\d+").Value)).ToArray();
+            short[] arrayOfRowsNumbers = arrayWithOutDishName.Select(s => short.Parse(Regex.Match(s, @"\d+").Value)).ToArray();
             return arrayOfRowsNumbers.Max();
 
         }
@@ -270,23 +312,8 @@ namespace GoShopping.Views
             }
         }
 
-        private void DishName_TextChanged(object sender, TextChangedEventArgs e)                //TODO
+        private void DishName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (ndvm.DishNameExistingInDB.Any(x => x.ToLower().Equals(((TextBox)sender).Text.ToLower())))
-            {
-                ShowDishNameError(true, "Name existing!");
-                ChangeVisibility(Visibility.Collapsed);
-            }
-            else if (string.IsNullOrWhiteSpace(DishName.Text))
-            {
-                ShowDishNameError(true, "Invalid name!");
-                ChangeVisibility(Visibility.Collapsed);
-            }
-            else
-            {
-                ShowDishNameError(false);
-                ChangeVisibility(Visibility.Visible);
-            }
             CheckValid(sender);
         }
 
@@ -306,30 +333,6 @@ namespace GoShopping.Views
             }
 
 
-        }
-
-        private void ChangeVisibility(Visibility visibility)
-        {
-            TextBlockIngredientName1.Visibility = visibility;
-            TextBlockIngredientQuantity1.Visibility = visibility;
-            TextBlockIngredientUnit1.Visibility = visibility;
-            IngredientName1.Visibility = visibility;
-            IngredientQuantity1.Visibility = visibility;
-            Unit1.Visibility = visibility;
-
-            var buttonAdd = listButtons.First(x => x.Name.Equals($"AddBtn{GetLastLineOfElements()}"));
-            buttonAdd.Visibility = visibility;
-            if (visibility == Visibility.Collapsed)
-            {
-                listButtons.Where(b => b.Name.Contains("Add")).ToList().ForEach(c => c.Visibility = visibility);
-                listTextBoxes.Where(b => b.Name.Contains("Ingredient")).ToList().ForEach(c => c.Visibility = visibility);
-                listTextBlockes.Where(b => b.Name.Contains("Ingredient")).ToList().ForEach(c => c.Visibility = visibility);
-                listComboBoxes.ForEach(c => c.Visibility = visibility);
-            }
-            else
-            {
-                //TODO
-            }
         }
 
         private void IngredientQuantity_TextChanged(object sender, TextChangedEventArgs e)
