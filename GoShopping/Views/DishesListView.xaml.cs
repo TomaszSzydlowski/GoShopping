@@ -28,5 +28,16 @@ namespace GoShopping.Views
         {
             DishesListViewModel.SelectedDishes = CheckedListView.SelectedItems;
         }
+
+        private void EditMenu_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new NewDishViewModel();
+            ContentControl.Visibility = Visibility.Visible;
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
