@@ -13,9 +13,6 @@
             <MenuItem Header="_Edit" Click="EditMenu_Click"/>
             <MenuItem Header="_Delete" Click="Delete_Click"/>
         </ContextMenu>
-        <DataTemplate x:Name="newDishViewTemplate" DataType="{x:Type viewmodels:NewDishViewModel}">
-            <local:NewDishView DataContext="{Binding}"/>
-        </DataTemplate>
         <ControlTemplate x:Key="ItemTemplate" TargetType="ListViewItem">
             <Border
                 BorderThickness="{TemplateBinding Border.BorderThickness}"
@@ -41,8 +38,14 @@
                 IsChecked="{Binding	RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />
         </DataTemplate>
     </UserControl.Resources>
-    <Grid >
-        <StackPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+            <StackPanel>
             <ListView
                 x:Name="CheckedListView"
                 SelectionMode="Multiple"
@@ -50,8 +53,8 @@
                 ItemTemplate="{StaticResource ItemDataTemplate}"
                 CheckBox.Unchecked="OnUncheckItem" 
                 CheckBox.Checked="checkedListView_Checked" FontFamily="Segoe UI Light" FontSize="16" BorderBrush="{x:Null}"
-                ContextMenu="{StaticResource itemMenu}"/>
+                ContextMenu="{StaticResource itemMenu}" 
+                MouseDoubleClick="CheckedListView_MouseDoubleClick"/>
         </StackPanel>
-        <ContentControl x:Name="ContentControl" Width="250" Height="300" Content="{Binding}" Visibility="Collapsed"/>
     </Grid>
 </UserControl>

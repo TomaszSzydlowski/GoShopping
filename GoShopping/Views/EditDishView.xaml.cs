@@ -12,11 +12,11 @@ using System.Windows.Media;
 namespace GoShopping.Views
 {
     /// <summary>
-    /// Interaction logic for NewDishView.xaml
+    /// Interaction logic for EditDishView.xaml
     /// </summary>
-    public partial class NewDishView : UserControl
+    public partial class EditDishView : UserControl
     {
-        NewDishViewModel ndvm = new NewDishViewModel();
+        EditDishViewModel edvm = new EditDishViewModel();
 
         List<Button> listButtons = new List<Button>();
         List<TextBox> listTextBoxes = new List<TextBox>();
@@ -25,11 +25,41 @@ namespace GoShopping.Views
 
         static Dictionary<string, bool> validDictionary = new Dictionary<string, bool>();
 
-        public NewDishView()
+        public EditDishView()
         {
             InitializeComponent();
-            DataContext = ndvm;
+            DataContext = edvm;
             GetElementsFromView();
+            SetValuesToElements();
+        }
+
+        private void SetValuesToElements()
+        {
+            DishName.Text = DishesListViewModel.SelectedItem;
+
+            for (var i = 0; i < EditDishViewModel.IngredientNames.Count; i++)
+            {
+                listTextBoxes.First(b => b.Name.Contains($"IngredientName{i + 1}")).Text = EditDishViewModel.IngredientNames[i];
+                listTextBoxes.First(b => b.Name.Contains($"IngredientQuantity{i + 1}")).Text = EditDishViewModel.IngredientQuantities[i].ToString();
+                listComboBoxes.First(b => b.Name.Contains($"Unit{i + 1}")).SelectedValue = EditDishViewModel.IngredientUnits[i];
+
+                listTextBoxes.First(b => b.Name.Contains($"IngredientName{i + 1}")).Visibility = Visibility.Visible;
+                listTextBoxes.First(b => b.Name.Contains($"IngredientQuantity{i + 1}")).Visibility = Visibility.Visible;
+                listTextBlockes.First(b => b.Name.Contains($"TextBlockIngredientName{i + 1}")).Visibility = Visibility.Visible;
+                listTextBlockes.First(b => b.Name.Contains($"TextBlockIngredientQuantity{i + 1}")).Visibility = Visibility.Visible;
+                listTextBlockes.First(b => b.Name.Contains($"TextBlockIngredientUnit{i + 1}")).Visibility = Visibility.Visible;
+                listComboBoxes.First(b => b.Name.Contains((i + 1).ToString())).Visibility = Visibility.Visible;
+
+                var AddBtn = listButtons.FirstOrDefault(x => x.Name.Equals($"AddBtn{i + 1}"));
+                if (AddBtn != null) AddBtn.Visibility = Visibility.Collapsed;
+            }
+
+            var currentAddBtn = listButtons.FirstOrDefault(x => x.Name.Equals($"AddBtn{EditDishViewModel.IngredientNames.Count}"));
+            if (currentAddBtn != null)
+            {
+                currentAddBtn.Visibility = Visibility.Visible;
+                currentAddBtn.IsEnabled = true;
+            }
         }
 
         private void GetElementsFromView()
@@ -50,8 +80,8 @@ namespace GoShopping.Views
         {
             var senderName = ((ComboBox)sender).Name;
             var number = short.Parse(Regex.Match(senderName, @"\d+").Value);
-            if (NewDishViewModel.IngredientUnits.Count < number) { NewDishViewModel.IngredientUnits.Add(String.Empty); }
-            NewDishViewModel.IngredientUnits[number - 1] = ((ComboBox)sender).Text;
+            if (EditDishViewModel.IngredientUnits.Count < number) { EditDishViewModel.IngredientUnits.Add(String.Empty); }
+            EditDishViewModel.IngredientUnits[number - 1] = ((ComboBox)sender).Text;
         }
 
         private void CheckValid(object sender)
@@ -73,15 +103,15 @@ namespace GoShopping.Views
                 {
                     if (validDictionary.ContainsKey(textBox.Name))
                     {
-                        validDictionary[textBox.Name] = !string.IsNullOrWhiteSpace(textBox.Text) && !ndvm.DishNameExistingInDB.Any(x => x.ToLower().Equals(((TextBox)sender).Text.ToLower()));
+                        validDictionary[textBox.Name] = !string.IsNullOrWhiteSpace(textBox.Text) && !edvm.DishesNameExistingInDB.Any(x => x.ToLower().Equals(((TextBox)sender).Text.ToLower()));
                     }
                     else
                     {
-                        validDictionary.Add(textBox.Name, !string.IsNullOrWhiteSpace(textBox.Text) && !ndvm.DishNameExistingInDB.Any(x => x.ToLower().Equals(((TextBox)sender).Text.ToLower())));
+                        validDictionary.Add(textBox.Name, !string.IsNullOrWhiteSpace(textBox.Text) && !edvm.DishesNameExistingInDB.Any(x => x.ToLower().Equals(((TextBox)sender).Text.ToLower())));
                     }
 
                     var lastLineOfElements = GetLastLineOfElements();
-                    SaveNewDishBtn.IsEnabled = isButtonAddEnable(lastLineOfElements) && !validDictionary.Values.Contains(false);
+                    UpdateBtn.IsEnabled = isButtonAddEnable(lastLineOfElements) && !validDictionary.Values.Contains(false);
                     ShowDishNameErrorMessage(sender);
                     return;
                 }
@@ -117,12 +147,12 @@ namespace GoShopping.Views
             {
                 currentButtonAddInLineOfElements.IsEnabled = isButtonAddEnable(currentLineOfElements);
             }
-            SaveNewDishBtn.IsEnabled = isButtonAddEnable(currentLineOfElements) && validDictionary[DishName.Name];
+            UpdateBtn.IsEnabled = isButtonAddEnable(currentLineOfElements) && validDictionary[DishName.Name];
         }
 
         private void ShowDishNameErrorMessage(object sender)
         {
-            if (ndvm.DishNameExistingInDB.Any(x => x.ToLower().Equals(((TextBox)sender).Text.ToLower())))
+            if (edvm.DishesNameExistingInDB.Any(x => x.ToLower().Equals(((TextBox)sender).Text.ToLower())))
             {
                 ShowDishNameError(true, "Name existing!");
             }
@@ -197,8 +227,8 @@ namespace GoShopping.Views
         {
             var name = ((TextBox)sender).Name;
             var number = short.Parse(Regex.Match(name, @"\d+").Value);
-            if (NewDishViewModel.IngredientNames.Count < number) { NewDishViewModel.IngredientNames.Add(String.Empty); }
-            NewDishViewModel.IngredientNames[number - 1] = ((TextBox)sender).Text.ToLower();
+            if (EditDishViewModel.IngredientNames.Count < number) { EditDishViewModel.IngredientNames.Add(String.Empty); }
+            EditDishViewModel.IngredientNames[number - 1] = ((TextBox)sender).Text.ToLower();
         }
 
         private void IngredientQuantity_OnLostFocus(object sender, RoutedEventArgs e)
@@ -210,10 +240,10 @@ namespace GoShopping.Views
         {
             var name = ((TextBox)sender).Name;
             var number = short.Parse(Regex.Match(name, @"\d+").Value);
-            if (NewDishViewModel.IngredientQuantities.Count < number) { NewDishViewModel.IngredientQuantities.Add(0); }
+            if (EditDishViewModel.IngredientQuantities.Count < number) { EditDishViewModel.IngredientQuantities.Add(0); }
             if (Int32.TryParse(((TextBox)sender).Text, out var quantity))
             {
-                NewDishViewModel.IngredientQuantities[number - 1] = quantity;
+                EditDishViewModel.IngredientQuantities[number - 1] = quantity;
             }
         }
 
@@ -224,7 +254,7 @@ namespace GoShopping.Views
 
         private static void SetDishName(object sender)
         {
-            NewDishViewModel.DishName = ((TextBox)sender).Text;
+            EditDishViewModel.DishName = ((TextBox)sender).Text;
         }
 
         private void Unit_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -315,9 +345,15 @@ namespace GoShopping.Views
             CheckValid(sender);
         }
 
-        private void SaveNewDish_Click(object sender, RoutedEventArgs e)
+        private void UpdateBtn_Click(object sender, RoutedEventArgs e)
         {
-            NewDishViewModel.Save();
+            EditDishViewModel.Update();
+            Window parentWindow = Application.Current.MainWindow;
+            if (parentWindow.GetType() == typeof(MainWindow))
+            {
+                (parentWindow as MainWindow).DataContext = new DishesListViewModel();
+                (parentWindow as MainWindow).Go.Visibility = Visibility.Visible;
+            }
         }
 
         private void IngredientName_TextChanged(object sender, TextChangedEventArgs e)

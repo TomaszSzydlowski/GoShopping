@@ -1,5 +1,6 @@
 ﻿using GoShopping.ViewModels;
 using System.Windows;
+using GoShopping.Views;
 
 namespace GoShopping
 {
