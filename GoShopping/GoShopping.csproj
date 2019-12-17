@@ -66,10 +66,14 @@
     </ApplicationDefinition>
     <Compile Include="Models\IngredientToBuy.cs" />
     <Compile Include="ViewModels\DishesListViewModel.cs" />
+    <Compile Include="ViewModels\EditDishViewModel.cs" />
     <Compile Include="ViewModels\NewDishViewModel.cs" />
     <Compile Include="ViewModels\ShoppingListViewModel.cs" />
     <Compile Include="Views\DishesListView.xaml.cs">
       <DependentUpon>DishesListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditDishView.xaml.cs">
+      <DependentUpon>EditDishView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewDishView.xaml.cs">
       <DependentUpon>NewDishView.xaml</DependentUpon>
@@ -94,6 +98,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\DishesListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditDishView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -18,6 +18,9 @@
         <DataTemplate x:Name="newDishViewTemplate" DataType="{x:Type viewmodels:NewDishViewModel}">
             <views:NewDishView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="editDishViewTemplate" DataType="{x:Type viewmodels:EditDishViewModel}">
+            <views:EditDishView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>

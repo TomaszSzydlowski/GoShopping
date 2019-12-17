@@ -4,10 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GoShopping.Views"
+             xmlns:viewmodels="clr-namespace:GoShopping.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="300">
 
     <UserControl.Resources>
+        <ContextMenu x:Key="itemMenu">
+            <MenuItem Header="_Edit" Click="EditMenu_Click"/>
+            <MenuItem Header="_Delete" Click="Delete_Click"/>
+        </ContextMenu>
         <ControlTemplate x:Key="ItemTemplate" TargetType="ListViewItem">
             <Border
                 BorderThickness="{TemplateBinding Border.BorderThickness}"
@@ -33,15 +38,23 @@
                 IsChecked="{Binding	RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}" />
         </DataTemplate>
     </UserControl.Resources>
-    <Grid >
-        <StackPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+            <StackPanel>
             <ListView
                 x:Name="CheckedListView"
                 SelectionMode="Multiple"
                 ItemsSource="{Binding}"
                 ItemTemplate="{StaticResource ItemDataTemplate}"
                 CheckBox.Unchecked="OnUncheckItem" 
-                CheckBox.Checked="checkedListView_Checked" FontFamily="Segoe UI Light" FontSize="16" BorderBrush="{x:Null}"/>
+                CheckBox.Checked="checkedListView_Checked" FontFamily="Segoe UI Light" FontSize="16" BorderBrush="{x:Null}"
+                ContextMenu="{StaticResource itemMenu}" 
+                MouseDoubleClick="CheckedListView_MouseDoubleClick"/>
         </StackPanel>
     </Grid>
 </UserControl>
