@@ -318,6 +318,12 @@ namespace GoShopping.Views
         private void SaveNewDish_Click(object sender, RoutedEventArgs e)
         {
             NewDishViewModel.Save();
+            Window parentWindow = Application.Current.MainWindow;
+            if (parentWindow.GetType() == typeof(MainWindow))
+            {
+                (parentWindow as MainWindow).DataContext = new DishesListViewModel();
+                (parentWindow as MainWindow).Go.Visibility = Visibility.Visible;
+            }
         }
 
         private void IngredientName_TextChanged(object sender, TextChangedEventArgs e)
