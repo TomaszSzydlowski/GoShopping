@@ -1,8 +1,10 @@
-﻿using GoShopping.Models;
+﻿using System.Collections.Generic;
+using GoShopping.Models;
 using GoShopping.ViewModels;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace GoShopping.Views
 {
@@ -11,23 +13,33 @@ namespace GoShopping.Views
     /// </summary>
     public partial class DishesListView : UserControl
     {
-        GoShoppingDbContext context = new GoShoppingDbContext();
+        GoShoppingDbContext _dbContext = new GoShoppingDbContext();
+        List<string> _temporaryListOfSelectedDishes=new List<string>();
 
         public DishesListView()
         {
             InitializeComponent();
-            DataContext = context.Dishes.Select(x => x.Name).ToList();
+            DataContext = _dbContext.Dishes.Select(x => x.Name).ToList();
         }
 
         private void OnUncheckItem(object sender, RoutedEventArgs e)
         {
-            DishesListViewModel.SelectedDishes = CheckedListView.SelectedItems;
+            var listView = (ListView)sender;
+
+            DishesListViewModel.SelectedItem = _temporaryListOfSelectedDishes.Except(DishesListViewModel.SelectedDishes.Cast<string>().ToList()).FirstOrDefault();
+            DishesListViewModel.SelectedDishes = listView.SelectedItems;
+
+            _temporaryListOfSelectedDishes.Remove(DishesListViewModel.SelectedItem);
         }
 
         private void checkedListView_Checked(object sender, RoutedEventArgs e)
         {
-            DishesListViewModel.SelectedDishes = CheckedListView.SelectedItems;
-            DishesListViewModel.SelectedItem = CheckedListView.SelectedItem.ToString();
+            var listView = (ListView) sender;
+
+            DishesListViewModel.SelectedItem = listView.SelectedItems.Cast<string>().ToList().LastOrDefault();
+            DishesListViewModel.SelectedDishes = listView.SelectedItems;
+
+            _temporaryListOfSelectedDishes.Add(DishesListViewModel.SelectedItem);
         }
 
         private void EditMenu_Click(object sender, RoutedEventArgs e)
@@ -47,7 +59,12 @@ namespace GoShopping.Views
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            int DishId = GetDishIdFromDB();
+        }
+
+        private int GetDishIdFromDB()
+        {
+            return _dbContext.Dishes.FirstOrDefault(x => x.Name.Equals(DishesListViewModel.SelectedItem)).DishId;
         }
 
         private void CheckedListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
