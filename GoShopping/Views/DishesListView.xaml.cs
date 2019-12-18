@@ -2,6 +2,7 @@
 using GoShopping.Models;
 using GoShopping.ViewModels;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -59,7 +60,13 @@ namespace GoShopping.Views
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            int DishId = GetDishIdFromDB();
+            int dishId = GetDishIdFromDB();
+
+            _dbContext.Dishes.Remove(_dbContext.Dishes.FirstOrDefault(x => x.DishId == dishId));
+            _dbContext.Ingredients.RemoveRange(_dbContext.Ingredients.Where(x => x.Dish.DishId == dishId));
+            _dbContext.SaveChanges();
+
+            DataContext = _dbContext.Dishes.Select(x => x.Name).ToList();
         }
 
         private int GetDishIdFromDB()
