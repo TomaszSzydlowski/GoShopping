@@ -14,7 +14,17 @@ namespace GoShopping.ViewModels
         public ShoppingListViewModel()
         {
             var ingredientToBuyList = CreateIngredientToBuyDistinctList(GetIngredientsOfSelectedDishes());
+            MultiplyByTheNumberOfPortions(ingredientToBuyList);
             Text = CreateTextToShow(ingredientToBuyList);
+        }
+
+        private void MultiplyByTheNumberOfPortions(List<IngredientToBuy> ingredientToBuyList)
+        {
+            foreach (var ingredientToBuy in ingredientToBuyList)
+            {
+                var howMany = DishesListViewModel.HowManyPortion[ingredientToBuy.DishName];
+                ingredientToBuy.Quantity *= howMany;
+            }
         }
 
         private string CreateTextToShow(List<IngredientToBuy> ingredientToBuyList)
@@ -40,13 +50,13 @@ namespace GoShopping.ViewModels
 
             foreach (var ingredient in ingredientsOfSelectedDishes)
             {
-                if (!result.Any(x => x.Name.Contains(ingredient.Name) && x.Unit.Contains(ingredient.Unit)))
+                if (!result.Any(x => x.Name.Equals(ingredient.Name) && x.Unit.Equals(ingredient.Unit)))
                 {
                     result.Add(ingredient);
                 }
                 else
                 {
-                    result.Find(x => x.Name.Contains(ingredient.Name) && x.Unit == ingredient.Unit).Quantity
+                    result.Find(x => x.Name.Equals(ingredient.Name) && x.Unit == ingredient.Unit).Quantity
                         += ingredient.Quantity;
                 }
             }
@@ -56,7 +66,7 @@ namespace GoShopping.ViewModels
 
         private List<IngredientToBuy> GetIngredientsOfSelectedDishes()
         {
-            var selectedDishes = (from object selectedDish in DishesListViewModel.SelectedDishes select selectedDish.ToString()).ToList();
+            var selectedDishes = DishesListViewModel.SelectedDishes.Cast<string>();
 
             var query = (from i in _dbContext.Ingredients
                          join d in _dbContext.Dishes on i.Dish.DishId equals d.DishId
